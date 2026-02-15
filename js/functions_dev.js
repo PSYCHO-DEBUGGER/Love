@@ -92,27 +92,32 @@ function startHeartAnimation() {
 	};
 })(jQuery);
 
-function timeElapse(date){
-	var current = Date();
-	var seconds = (Date.parse(current) - Date.parse(date)) / 1000;
-	var days = Math.floor(seconds / (3600 * 24));
-	seconds = seconds % (3600 * 24);
-	var hours = Math.floor(seconds / 3600);
-	if (hours < 10) {
-		hours = "0" + hours;
+function update() {
+		var current = new Date();
+		var totalSeconds = Math.floor((current - startDate) / 1000);
+		if (totalSeconds < 0) totalSeconds = 0;
+
+		var days = Math.floor(totalSeconds / (3600 * 24));
+		var seconds = totalSeconds % (3600 * 24);
+		var hours = Math.floor(seconds / 3600);
+		seconds = seconds % 3600;
+		var minutes = Math.floor(seconds / 60);
+		seconds = seconds % 60;
+
+		if (hours < 10) {
+			hours = "0" + hours;
+		}
+		if (minutes < 10) {
+			minutes = "0" + minutes;
+		}
+		if (seconds < 10) {
+			seconds = "0" + seconds;
+		}
+		var result = "";
+		result += "To celebrate our: <br>";
+		result += days + " Day <span class=\"digit\">" + hours + "</span> Hour <span class=\"digit\">" + minutes + "</span> Min <span class=\"digit\">" + seconds + "</span> Sec";
+		$("#clock").html(result);
 	}
-	seconds = seconds % 3600;
-	var minutes = Math.floor(seconds / 60);
-	if (minutes < 10) {
-		minutes = "0" + minutes;
-	}
-	seconds = seconds % 60;
-	if (seconds < 10) {
-		seconds = "0" + seconds;
-	}
-	var result = "<span class=\"digit\">" + days + "</span> days <span class=\"digit\">" + hours + "</span> hours <span class=\"digit\">" + minutes + "</span> minutes <span class=\"digit\">" + seconds + "</span> seconds"; 
-	$("#elapseClock").html(result);
-}
 
 function showMessages() {
 	adjustWordsPosition();
